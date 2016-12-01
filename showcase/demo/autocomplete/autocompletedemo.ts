@@ -7,10 +7,14 @@ import {CountryService} from '../service/countryservice';
 export class AutoCompleteDemo {
 
     country: any;
+
+    htmlCountry: any;
     
     countries: any[];
         
     filteredCountriesSingle: any[];
+    
+    filteredCountriesHtml: any[];
     
     filteredCountriesMultiple: any[];
     
@@ -29,6 +33,13 @@ export class AutoCompleteDemo {
         });
     }
     
+    filterCountryHtml(event) {
+        let query = event.query;        
+        this.countryService.getCountries().then(countries => {
+            this.filteredCountriesHtml = this.filterCountry(query, countries);
+        });
+    }
+
     filterCountryMultiple(event) {
         let query = event.query;
         this.countryService.getCountries().then(countries => {
