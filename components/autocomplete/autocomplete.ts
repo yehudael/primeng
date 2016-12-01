@@ -37,7 +37,8 @@ export const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
                 <ul class="ui-autocomplete-items ui-autocomplete-list ui-widget-content ui-widget ui-corner-all ui-helper-reset" *ngIf="panelVisible">
                     <li *ngFor="let option of suggestions" [ngClass]="{'ui-autocomplete-list-item ui-corner-all':true,'ui-state-highlight':(highlightOption==option)}"
                         (mouseenter)="highlightOption=option" (mouseleave)="highlightOption=null" (click)="selectItem(option)">
-                        <span *ngIf="!itemTemplate">{{field ? option[field] : option}}</span>
+                        <span *ngIf="!itemTemplate && !unsafeHtml">{{field ? option[field] : option}}</span>
+                        <span *ngIf="!itemTemplate && unsafeHtml" [innerHTML]='field ? option[field] : option'></span>
                         <ng-template *ngIf="itemTemplate" [pTemplateWrapper]="itemTemplate" [item]="option"></ng-template>
                     </li>
                 </ul>
@@ -90,6 +91,8 @@ export class AutoComplete implements AfterViewInit,DoCheck,AfterViewChecked,Cont
     
     @Input() field: string;
     
+    @Input() unsafeHtml: boolean;
+
     @Input() scrollHeight: string = '200px';
     
     @Input() dropdown: boolean;
