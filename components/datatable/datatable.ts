@@ -541,6 +541,8 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
     @Input() contextMenu: any;
     
     @Input() csvSeparator: string = ',';
+
+    @Input() textDelimiter: string = '';
     
     @Input() exportFilename: string = 'download';
     
@@ -1960,7 +1962,9 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
         //headers
         for(let i = 0; i < this.columns.length; i++) {
             if(this.columns[i].field) {
+                csv += this.textDelimiter;
                 csv += this.columns[i].header || this.columns[i].field;
+                csv += this.textDelimiter;
                 
                 if(i < (this.columns.length - 1)) {
                     csv += this.csvSeparator;
@@ -1973,7 +1977,9 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
             csv += '\n';
             for(let i = 0; i < this.columns.length; i++) {
                 if(this.columns[i].field) {
+                    csv += this.textDelimiter;
                     csv += this.resolveFieldData(record, this.columns[i].field);
+                    csv += this.textDelimiter;
                     
                     if(i < (this.columns.length - 1)) {
                         csv += this.csvSeparator;
